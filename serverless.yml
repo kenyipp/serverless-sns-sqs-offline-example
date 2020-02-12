@@ -1,0 +1,20 @@
+service: sns-sqs-offline-example
+
+plugins:
+  - serverless-webpack
+  - serverless-offline-direct-lambda
+  - serverless-offline-sns
+  - serverless-offline-sqs
+  - serverless-offline
+
+package:
+  individually: true
+  exclude:
+    - elasticMQ
+
+custom:
+  serverless-offline:
+    port: 3200
+  webpack:
+    includeModules: true
+
