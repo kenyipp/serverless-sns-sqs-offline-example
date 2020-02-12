@@ -8,8 +8,7 @@ $ npm run deploy
 ```
 
 ## Architecture
-
-![logo](./architecture.png "Architecture")
+<img src="./architecture.png" width="750px" alt="Architecture" />
 
 ## License
 This software is released under the MIT license. See the [license file](LICENSE) for more details.
