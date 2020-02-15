@@ -8,12 +8,12 @@ function SNS(topic) {
 	});
 }
 
-SNS.getFullTopic = function (topic) {
+SNS.getFullTopic = function getFullTopic(topic) {
 	const { SERVICE, NODE_ENV } = process.env;
 	return [SERVICE, NODE_ENV, "sns", topic].join("-");
 };
 
-SNS.getArn = function (topic) {
+SNS.getArn = function getArn(topic) {
 	const { NODE_ENV, AWS_DEPLOY_REGION, AWS_ACCOUNT_ID } = process.env;
 	const fullTopic = this.getFullTopic(topic);
 	return [
@@ -33,7 +33,7 @@ function SQS(queueName) {
 	});
 }
 
-SQS.getUrl = function (queueName) {
+SQS.getUrl = function getUrl(queueName) {
 	const {
 		NODE_ENV, AWS_DEPLOY_REGION, AWS_ACCOUNT_ID, SERVICE,
 	} = process.env;
@@ -63,7 +63,7 @@ function Lambda(functionName) {
 	});
 }
 
-Lambda.getFullFunctionName = function (functionName) {
+Lambda.getFullFunctionName = function getFullFunctionNames(functionName) {
 	const { SERVICE, NODE_ENV } = process.env;
 	return [SERVICE, NODE_ENV, functionName].join("-");
 };
