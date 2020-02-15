@@ -31,7 +31,7 @@ $ npm run deploy
 
 ## ToDo List
 - [ ] Better Documentation
-- [ ] Replace the wild class on iamRoleStatements in serverless.yml
+- [ ] Replace the wildcard on iamRoleStatements in serverless.yml
 - [ ] Auth mechanism to prevent API dispose to public
 - [ ] Error handling, Amazon SQS Dead-Letter Queues
 - [ ] Test cases
