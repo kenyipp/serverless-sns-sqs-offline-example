@@ -1,24 +1,24 @@
 "use strict";
-const AWS = require("aws-sdk");
+
+const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-dependencies
 const awsHelper = require("../utils/awsHelper");
 const logger = require("../utils/logger");
 
-module.exports.handler = async function (event) {
-
+async function handler(event) {
 	console.log(JSON.stringify(event, null, 4));
 
 	const sqs = new AWS.SQS();
 
 	try {
 		const body = JSON.parse(event.Records[0].Sns.Message);
-		console.log(awsHelper.SQS.getUrl(body.destionation));
+
 		await sqs.sendMessage({
 			MessageBody: JSON.stringify(body.payload),
-			QueueUrl: awsHelper.SQS.getUrl(body.destionation)
+			QueueUrl: awsHelper.SQS.getUrl(body.destionation),
 		}).promise();
-
 	} catch (error) {
 		logger.error(error);
 	}
+}
 
-};
+module.exports.handler = handler;

@@ -6,7 +6,7 @@ joi.errors = {
 	root: "value",
 	key: "\"{{!label}}\" ",
 	messages: {
-		wrapArrays: true
+		wrapArrays: true,
 	},
 	any: {
 		unknown: "is not allowed",
@@ -14,11 +14,11 @@ joi.errors = {
 		empty: "is not allowed to be empty",
 		required: "is required",
 		allowOnly: "must be one of {{valids}}",
-		default: "threw an error when running default method"
+		default: "threw an error when running default method",
 	},
 	alternatives: {
 		base: "not matching any of the allowed alternatives",
-		child: null
+		child: null,
 	},
 
 	array: {
@@ -41,16 +41,16 @@ joi.errors = {
 		orderedLength: "at position {{pos}} fails because array must contain at most {{limit}} items",
 		ref: "references \"{{ref}}\" which is not a positive integer",
 		sparse: "must not be a sparse array",
-		unique: "position {{pos}} contains a duplicate value"
+		unique: "position {{pos}} contains a duplicate value",
 	},
 	boolean: {
-		base: "must be a boolean"
+		base: "must be a boolean",
 	},
 	binary: {
 		base: "must be a buffer or a string",
 		min: "must be at least {{limit}} bytes",
 		max: "must be less than or equal to {{limit}} bytes",
-		length: "must be {{limit}} bytes"
+		length: "must be {{limit}} bytes",
 	},
 	date: {
 		base: "must be a number of milliseconds or valid date string",
@@ -62,9 +62,9 @@ joi.errors = {
 		isoDate: "must be a valid ISO 8601 date",
 		timestamp: {
 			javascript: "must be a valid timestamp or number of milliseconds",
-			unix: "must be a valid timestamp or number of seconds"
+			unix: "must be a valid timestamp or number of seconds",
 		},
-		ref: "references \"{{ref}}\" which is not a date"
+		ref: "references \"{{ref}}\" which is not a date",
 	},
 	function: {
 		base: "must be a Function",
@@ -72,11 +72,11 @@ joi.errors = {
 		minArity: "must have an arity greater or equal to {{n}}",
 		maxArity: "must have an arity lesser or equal to {{n}}",
 		ref: "must be a Joi reference",
-		class: "must be a class"
+		class: "must be a class",
 	},
 	lazy: {
 		base: "!!schema error: lazy schema must be set",
-		schema: "!!schema error: lazy schema function must return a schema"
+		schema: "!!schema error: lazy schema function must return a schema",
 	},
 	object: {
 		base: "must be an object",
@@ -98,11 +98,11 @@ joi.errors = {
 			override: "cannot rename child \"{{from}}\" because override is disabled and target \"{{to}}\" exists",
 			regex: {
 				multiple: "cannot rename children {{from}} because multiple renames are disabled and another key was already renamed to \"{{to}}\"",
-				override: "cannot rename children {{from}} because override is disabled and target \"{{to}}\" exists"
-			}
+				override: "cannot rename children {{from}} because override is disabled and target \"{{to}}\" exists",
+			},
 		},
 		type: "must be an instance of \"{{type}}\"",
-		schema: "must be a Joi instance"
+		schema: "must be a Joi instance",
 	},
 	number: {
 		base: "must be a number",
@@ -117,7 +117,7 @@ joi.errors = {
 		precision: "must have no more than {{limit}} decimal places",
 		ref: "references \"{{ref}}\" which is not a number",
 		multiple: "must be a multiple of {{multiple}}",
-		port: "must be a valid port"
+		port: "must be a valid port",
 	},
 	string: {
 		base: "must be a string",
@@ -131,8 +131,8 @@ joi.errors = {
 			name: "with value \"{{!value}}\" fails to match the {{name}} pattern",
 			invert: {
 				base: "with value \"{{!value}}\" matches the inverted pattern: {{pattern}}",
-				name: "with value \"{{!value}}\" matches the inverted {{name}} pattern"
-			}
+				name: "with value \"{{!value}}\" matches the inverted {{name}} pattern",
+			},
 		},
 		email: "must be a valid email",
 		uri: "must be a valid uri",
@@ -152,10 +152,10 @@ joi.errors = {
 		creditCard: "must be a credit card",
 		ref: "references \"{{ref}}\" which is not a number",
 		ip: "must be a valid ip address with a {{cidr}} CIDR",
-		ipVersion: "must be a valid ip address of one of the following versions {{version}} with a {{cidr}} CIDR"
+		ipVersion: "must be a valid ip address of one of the following versions {{version}} with a {{cidr}} CIDR",
 	},
 	symbol: {
 		base: "must be a symbol",
-		map: "must be one of {{map}}"
-	}
+		map: "must be one of {{map}}",
+	},
 };

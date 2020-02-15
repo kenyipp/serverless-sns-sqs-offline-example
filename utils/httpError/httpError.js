@@ -1,17 +1,9 @@
 "use strict";
 
-function createGetter(code) {
-	return function () {
-		return function (error) {
-			return new HttpError(code, error);
-		};
-	};
-}
-
 function HttpError(statusCode, error) {
-
-	if (this instanceof HttpError == false)
+	if (!(this instanceof HttpError)) {
 		return new HttpError(statusCode, error);
+	}
 
 	this.statusCode = statusCode || 500;
 	this.error = error;
@@ -20,9 +12,18 @@ function HttpError(statusCode, error) {
 	Error.captureStackTrace(this, HttpError);
 }
 
+function createGetter(code) {
+	return function () {
+		return function (error) {
+			return new HttpError(code, error);
+		};
+	};
+}
+
 function ErrorDetail(code, message, target, details) {
-	if (this instanceof ErrorDetail == false)
+	if (!(this instanceof ErrorDetail)) {
 		return new ErrorDetail(code, message, target, details);
+	}
 	this.code = code;
 	this.message = message;
 	this.target = target;
@@ -34,7 +35,6 @@ HttpError.createError = function (statusCode, error) {
 };
 
 HttpError.handleError = function (rawError) {
-	
 	if (!rawError.isAPIError) {
 		if (rawError instanceof HttpError.Error) {
 			rawError = HttpError(400, rawError);
@@ -47,17 +47,17 @@ HttpError.handleError = function (rawError) {
 		rawError.error = {
 			status: 0,
 			server_time: Date.now(),
-			...rawError.error
+			...rawError.error,
 		};
 	}
 
 	return {
 		statusCode: rawError.statusCode,
-		body: JSON.stringify(rawError.error)
+		body: JSON.stringify(rawError.error),
 	};
 };
 
-module.exports = exports = HttpError;
+module.exports = HttpError;
 
 module.exports.Error = ErrorDetail;
 
@@ -67,53 +67,52 @@ Object.defineProperties(
 		BadRequest: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(400)
+			get: createGetter(400),
 		},
 		Unauthorized: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(401)
+			get: createGetter(401),
 		},
 		PaymentRequired: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(402)
+			get: createGetter(402),
 		},
 		Forbidden: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(403)
+			get: createGetter(403),
 		},
 		NotFound: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(404)
+			get: createGetter(404),
 		},
 		MethodNotAllowed: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(405)
+			get: createGetter(405),
 		},
 		NotAcceptable: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(406)
+			get: createGetter(406),
 		},
 		InternalServerError: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(500)
+			get: createGetter(500),
 		},
 		NotImplemented: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(501)
+			get: createGetter(501),
 		},
 		ServiceUnavailable: {
 			configurable: true,
 			enumerable: true,
-			get: createGetter(503)
-		}
-	}
+			get: createGetter(503),
+		},
+	},
 );
-

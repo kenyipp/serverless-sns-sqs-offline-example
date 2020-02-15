@@ -1,5 +1,6 @@
 "use strict";
-const AWS = require("aws-sdk");
+
+const AWS = require("aws-sdk"); // eslint-disable-line import/no-extraneous-dependencies
 const Joi = require("joi");
 const logger = require("../utils/logger");
 const awsHelper = require("../utils/awsHelper");
@@ -13,37 +14,37 @@ const bodySchema = Joi.object({
 	payload: Joi
 		.object()
 		.default({})
-		.description("The message payload to forward to")
+		.description("The message payload to forward to"),
 });
 
-module.exports.handler = async function (event) {
+async function handler(event) {
 	let body;
 
 	try {
-		event.body = JSON.parse(event.body);
+		event.body = JSON.parse(event.body); // eslint-disable-line no-param-reassign
 		const { error, value } = Joi.validate(
 			event.body,
 			bodySchema,
-			{ abortEarly: false }
+			{ abortEarly: false },
 		);
 		if (error) throw error;
 		body = value;
 
 		const sns = new AWS.SNS({
-			endpoint: process.env.NODE_ENV === "production" ? void 0 : "http://127.0.0.1:4002",
-			region: process.env.AWS_DEPLOY_REGION
+			endpoint: process.env.NODE_ENV === "production" ? undefined : "http://127.0.0.1:4002",
+			region: process.env.AWS_DEPLOY_REGION,
 		});
 
 		await sns.publish({
 			Message: JSON.stringify(body),
-			TopicArn: awsHelper.SNS.getArn(body.destionation)
+			TopicArn: awsHelper.SNS.getArn(body.destionation),
 		}).promise();
 
 		return {};
-
-	} catch (error) { 
+	} catch (error) {
 		logger.debug(error);
 		return { statusCode: 400, body: error.message };
 	}
-
 }
+
+module.exports.handler = handler;

@@ -7,34 +7,34 @@ module.exports = {
 			body: JSON.stringify({
 				status: 1,
 				server_time: Date.now(),
-				"version": "1.0",
-				...object
+				version: "1.0",
+				...object,
 			}),
 		};
 	},
 
-	accepted(){
+	accepted() {
 		return {
-			statusCode: 202
+			statusCode: 202,
 		};
 	},
 
 	badRequest() {
 		return {
-			statusCode: 400
+			statusCode: 400,
 		};
 	},
 
 	forBidden() {
 		return {
-			statusCode: 403
+			statusCode: 403,
 		};
 	},
 
 	internalServerError() {
 		return {
-			statusCode: 500
-		}
-	}
+			statusCode: 500,
+		};
+	},
 
 };

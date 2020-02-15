@@ -1,6 +1,5 @@
 "use strict";
 
-const webpack = require("webpack");
 const slsw = require("serverless-webpack");
 const nodeExternals = require("webpack-node-externals");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
@@ -12,17 +11,16 @@ async function getConfig() {
 		entry: slsw.lib.entries,
 		devtool: "source-map",
 		target: "node",
-		mode: mode,
+		mode,
 		externals: [nodeExternals()],
 		module: {},
 		optimization: {
-			minimize: true
+			minimize: true,
 		},
 		plugins: [
-			new LodashModuleReplacementPlugin
-		]
+			new LodashModuleReplacementPlugin(),
+		],
 	};
-
 }
 
 module.exports = getConfig();

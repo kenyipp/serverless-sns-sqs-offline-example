@@ -1,5 +1,7 @@
 "use strict";
 
-module.exports.handler = async function(event){
+async function handler(event) {
 	console.log(JSON.stringify(event, null, 4));
-};
+}
+
+module.exports.handler = handler;

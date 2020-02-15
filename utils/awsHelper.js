@@ -1,10 +1,9 @@
 "use strict";
 
 function SNS(topic) {
-	if (!topic)
-		throw new Error("Invalid topic");
+	if (!topic) throw new Error("Invalid topic");
 	return Object.keys(this).reduce((proxy, key) => {
-		proxy[key] = this[key].bind(SNS, topic);
+		proxy[key] = this[key].bind(SNS, topic); // eslint-disable-line no-param-reassign
 		return proxy;
 	});
 }
@@ -22,22 +21,22 @@ SNS.getArn = function (topic) {
 		AWS_DEPLOY_REGION,
 		// 123456789012 is the accountId of sns-offline
 		NODE_ENV === "development" ? "123456789012" : AWS_ACCOUNT_ID,
-		fullTopic
+		fullTopic,
 	].join(":");
 };
 
 function SQS(queueName) {
-	if (!queueName)
-		throw new Error("Invalid queue name");
+	if (!queueName) throw new Error("Invalid queue name");
 	return Object.keys(this).reduce((proxy, key) => {
-		proxy[key] = this[key].bind(SQS, queueName);
+		proxy[key] = this[key].bind(SQS, queueName); // eslint-disable-line no-param-reassign
 		return proxy;
 	});
-};
+}
 
 SQS.getUrl = function (queueName) {
-
-	const { NODE_ENV, AWS_DEPLOY_REGION, AWS_ACCOUNT_ID, SERVICE } = process.env;
+	const {
+		NODE_ENV, AWS_DEPLOY_REGION, AWS_ACCOUNT_ID, SERVICE,
+	} = process.env;
 
 	const fullName = [SERVICE, NODE_ENV, "sqs", queueName].join("-");
 
@@ -45,23 +44,21 @@ SQS.getUrl = function (queueName) {
 		return [
 			"http://localhost:9324",
 			"queue",
-			fullName
+			fullName,
 		].join("/");
 	}
 
 	return [
-		"https://sqs." + AWS_DEPLOY_REGION + ".amazonaws.com",
+		`https://sqs.${AWS_DEPLOY_REGION}.amazonaws.com`,
 		AWS_ACCOUNT_ID,
-		fullName
+		fullName,
 	].join("/");
-
 };
 
 function Lambda(functionName) {
-	if (!functionName)
-		throw new Error("Invalid topic");
+	if (!functionName) throw new Error("Invalid topic");
 	return Object.keys(this).reduce((proxy, key) => {
-		proxy[key] = this[key].bind(Lambda, functionName);
+		proxy[key] = this[key].bind(Lambda, functionName); // eslint-disable-line no-param-reassign
 		return proxy;
 	});
 }
@@ -72,7 +69,7 @@ Lambda.getFullFunctionName = function (functionName) {
 };
 
 module.exports = {
-	SNS: SNS,
-	SQS: SQS,
-	Lambda: Lambda
+	SNS,
+	SQS,
+	Lambda,
 };
