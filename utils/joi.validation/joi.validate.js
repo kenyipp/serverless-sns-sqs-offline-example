@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use strict";
 
 require("./joi.language");
@@ -23,14 +24,14 @@ function validate(path) {
 		if (schema == null) throw new Error("Schema should not be empty");
 		return (event) => {
 			if (!event[path]) {
-				event[path] = {};
+				event[path] = {}; // eslint-disable no-param-reassign
 			}
 			const body = event[path];
 			const response = Joi.validate(body, schema, { abortEarly: false, ...options });
 			if (response.error) {
 				throw HttpError.BadRequest(BadArguments(response.error.details.map(JoIError)));
 			}
-			event[path] = response.value;
+			event[path] = response.value; // eslint-disable no-param-reassign
 		};
 	};
 }
