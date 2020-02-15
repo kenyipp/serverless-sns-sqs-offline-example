@@ -1,0 +1,42 @@
+{
+	"400": {
+		"name": "Bad Request",
+		"message": "invalid input"
+	},
+	"401": {
+		"name": "Unauthorized",
+		"message": "missing or invalid authentication token"
+	},
+	"402": {
+		"name": "Payment Required",
+		"message": "you have exceeded the daily limit on the api request"
+	},
+	"403": {
+		"name": "Forbidden",
+		"message": "you are not permitted to perform this action"
+	},
+	"404": {
+		"name": "Not Found",
+		"message": "requested resource not found"
+	},
+	"405": {
+		"name": "Method Not Allowed",
+		"message": "requested API has not provide this method"
+	},
+	"406": {
+		"name": "Not Acceptable",
+		"message": ""
+	},
+	"500": {
+		"name": "Internal Server Error",
+		"message": "server has encountered an unexpected condition"
+	},
+	"501": {
+		"name": "Not Implemented",
+		"message": "api has yet to implement"
+	},
+	"503": {
+		"name": "Service Unavailable",
+		"message": "server is currently unable to provide the service"
+	}
+}

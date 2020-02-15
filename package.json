@@ -4,7 +4,10 @@
 	"description": "Minimal example of running serverless-offline with SQS and SNS in local environment.",
 	"main": "index.js",
 	"scripts": {
-
+		"logs": "serverless logs -f actionDispatcher -t --function",
+		"dev": "NODE_ENV=development nodemon --exec \"serverless offline start\" -e \"extensions,to,watch,for,example,js,elm,hs,py\"  ",
+		"invoke": "serverless invoke --function",
+		"invoke:local": "serverless invoke local --function"
 	},
 	"devDependencies": {
 		"serverless-offline": "^5.12.1",
@@ -22,5 +25,12 @@
 		"serverless-offline"
 	],
 	"author": "ken.yip",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"aws-sdk": "^2.618.0",
+		"joi": "^14.3.1",
+		"lodash": "^4.17.15",
+		"lodash-webpack-plugin": "^0.11.5",
+		"winston": "^3.2.1"
+	}
 }

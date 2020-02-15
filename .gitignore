@@ -2,3 +2,5 @@ node_modules
 .serverless
 .vscode
 .webpack
+eny.yml
+test.js
