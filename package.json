@@ -4,16 +4,24 @@
 	"description": "Minimal example of running serverless-offline with SQS and SNS in local environment.",
 	"main": "index.js",
 	"scripts": {
-		"logs": "serverless logs -f actionDispatcher -t --function",
+		"logs": "serverless logs -s=production -t -f",
 		"dev": "NODE_ENV=development nodemon --exec \"serverless offline start\" -e \"extensions,to,watch,for,example,js,elm,hs,py\"  ",
 		"invoke": "serverless invoke --function",
-		"invoke:local": "serverless invoke local --function"
+		"invoke:local": "serverless invoke local --function",
+		"deploy": "serverless deploy --stage=production",
+		"lint": "eslint . --ext .js",
+		"lint:fix": "eslint . --ext .js --fix"
 	},
 	"devDependencies": {
+		"aws-sdk": "^2.618.0",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb-base": "^14.0.0",
+		"eslint-plugin-import": "^2.20.1",
 		"serverless-offline": "^5.12.1",
 		"serverless-offline-direct-lambda": "0.0.1",
 		"serverless-offline-sns": "^0.68.0",
 		"serverless-offline-sqs": "^3.1.2",
+		"serverless-pseudo-parameters": "^2.5.0",
 		"serverless-webpack": "^5.3.1",
 		"webpack": "^4.41.6",
 		"webpack-node-externals": "^1.7.2"
@@ -27,7 +35,6 @@
 	"author": "ken.yip",
 	"license": "ISC",
 	"dependencies": {
-		"aws-sdk": "^2.618.0",
 		"joi": "^14.3.1",
 		"lodash": "^4.17.15",
 		"lodash-webpack-plugin": "^0.11.5",

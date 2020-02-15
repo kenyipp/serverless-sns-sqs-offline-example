@@ -4,37 +4,59 @@ provider:
   name: aws
   runtime: nodejs10.x
   region: ap-southeast-1
-  stage: ${env:NODE_ENV, "development"}
+  stage: ${opt:stage, "development"}
   profile: default
   memorySize: 128 # minimum memory size on amazon lambda
   environment:
+    NODE_ENV: ${self:provider.stage}
     SERVICE: ${self:service}
-    STAGE: ${self:provider.stage}
-    AWS_REGION: ${self:provider.region}
+    AWS_DEPLOY_REGION: ${self:provider.region}
+    AWS_ACCOUNT_ID: "#{AWS::AccountId}"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - SQS:SendMessage
+        - SQS:DeleteMessage
+        - SQS:ReceiveMessage
+        - SQS:GetQueueUrl
+        - SQS:ListQueues
+      Resource: "*"     
 
 custom:
 
   serverless-offline: 
     port: 3200
 
+  serverless-offline-sns:
+    port: 4002
+    debug: false
+
+  serverless-offline-sqs:
+    autoCreate: true
+    apiVersion: "2012-11-05"
+    endpoint: http://0.0.0.0:9324
+    region: ap-southeast-1
+    skipCacheInvalidation: false
+
+    
   webpack:
     includeModules: true
     webpackConfig: "webpack.config.js"
     packager: "npm"
     keepOutputDirectory: true
     
-  serverless-offline-sqs:
-    autoCreate: true
-    apiVersion: "2012-11-05"
-    endpoint: http://0.0.0.0:9324
-    skipCacheInvalidation: false
-    
-  serverless-offline-sns:
-    port: 4002
-    debug: false
-
 plugins:
   - serverless-webpack
+  - serverless-pseudo-parameters
   - serverless-offline-direct-lambda
   - serverless-offline-sns
   - serverless-offline-sqs
@@ -50,7 +72,7 @@ functions:
   actionDispatcher:
     handler: src/actionDispatcher.handler
     description: The start point of sns-sqs-lambda stack
-    events: # invoke the flow by API
+    events:
       - http:
           path: /invoke
           method: post
@@ -61,5 +83,31 @@ functions:
     description: lambda function that subscribe "lambdaFunction" SNS topic
     events:
       - sns: ${self:service}-${self:provider.stage}-sns-lambdaFunction
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - firstQueue
+              - Arn
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - secondQueue
+              - Arn
 
-  
+  lambdaEnqueuer:
+    handler: src/lambdaEnqueuer.handler
+    description: A lambda function that receive message via SNS and enqueue to the SQS queue.
+    events:
+      - sns: ${self:service}-${self:provider.stage}-sns-firstQueue
+      - sns: ${self:service}-${self:provider.stage}-sns-secondQueue
+            
+resources:
+  Resources:
+    firstQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:service}-${self:provider.stage}-sqs-firstQueue
+    secondQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:service}-${self:provider.stage}-sqs-secondQueue

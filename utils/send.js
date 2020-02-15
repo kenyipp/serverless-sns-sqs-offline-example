@@ -33,7 +33,7 @@ module.exports = {
 
 	internalServerError() {
 		return {
-			statusCode: 500,
+			statusCode: 500
 		}
 	}
 
