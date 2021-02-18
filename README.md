@@ -19,11 +19,9 @@ docker-compose up -d
 
 ### Development
 
-We are using [nodemon](https://www.npmjs.com/package/nodemon) for hot loading and [serverless-offline](https://www.npmjs.com/package/serverless-offline) to simulate the lambda environment.
-
 ```sh
 npm install
-npm run dev
+NODE_ENV=development serverless offline start
 ```
 
 ### Deploy
