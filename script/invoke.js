@@ -9,7 +9,7 @@ const lambda = new AWS.Lambda({
 });
 
 const payload = {
-	body: { hello: "world" },
+	body: { destination: "firstQueue", payload: { "haa": "boo" } },
 };
 
 lambda
