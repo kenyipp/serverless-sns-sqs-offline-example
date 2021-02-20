@@ -14,7 +14,7 @@ async function handler(event) {
 
 		await sqs.sendMessage({
 			MessageBody: JSON.stringify(body.payload),
-			QueueUrl: awsHelper.SQS.getUrl(body.destionation),
+			QueueUrl: awsHelper.SQS.getUrl(body.destination),
 		}).promise();
 	} catch (error) {
 		logger.error(error);

@@ -6,10 +6,10 @@ const logger = require("../utils/logger");
 const awsHelper = require("../utils/awsHelper");
 
 const bodySchema = Joi.object({
-	destionation: Joi
+	destination: Joi
 		.string()
 		.allow(["firstQueue", "secondQueue", "lambdaFunction"])
-		.description("The destionation you want to forward the payload to")
+		.description("The destination you want to forward the payload to")
 		.required(),
 	payload: Joi
 		.object()
@@ -21,7 +21,7 @@ async function handler(event) {
 	let body;
 
 	try {
-		event.body = JSON.parse(event.body); // eslint-disable-line no-param-reassign
+		console.log(event.body)
 		const { error, value } = Joi.validate(
 			event.body,
 			bodySchema,
@@ -34,10 +34,11 @@ async function handler(event) {
 			endpoint: process.env.NODE_ENV === "production" ? undefined : "http://127.0.0.1:4002",
 			region: process.env.AWS_DEPLOY_REGION,
 		});
+		console.log(body)
 
 		await sns.publish({
 			Message: JSON.stringify(body),
-			TopicArn: awsHelper.SNS.getArn(body.destionation),
+			TopicArn: awsHelper.SNS.getArn(body.destination),
 		}).promise();
 
 		return {};
